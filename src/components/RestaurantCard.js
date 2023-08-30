@@ -7,17 +7,13 @@ const styleCard = {
 const RestaurantCard = (props) => {
   const {
     resData: {
-      card: {
-        card: {
-          info: {
-            cloudinaryImageId,
-            name,
-            cuisines,
-            avgRating,
-            costForTwo,
-            sla: { deliveryTime },
-          },
-        },
+      info: {
+        cloudinaryImageId,
+        name,
+        cuisines,
+        avgRating,
+        costForTwo,
+        sla: { deliveryTime },
       },
     },
   } = props;
