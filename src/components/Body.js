@@ -16,23 +16,27 @@ const Body = () => {
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
-    fetchDate();
+    fetchData();
   }, []);
 
-  const fetchDate = async () => {
-    const response = await axios.get(
+  const fetchData = async () => {
+    // const json = await axios.get(
+    //   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.022505&lng=72.5713621&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    // );
+
+    const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.022505&lng=72.5713621&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
+    // console.log(response);
 
-    console.log(response);
-
+    const json = await data.json();
     setRestaurantList(
-      response?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
 
     setFilteredRestaurants(
-      response?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
   };
@@ -104,7 +108,7 @@ const Body = () => {
             key={restaurant.info.id}
             to={`/restaurants/${restaurant.info.id}`}
           >
-            {restaurant.info.avgRating < 4 ? (
+            {restaurant.info.avgRating > 4 ? (
               <RestaurantCardPromoted resData={restaurant} />
             ) : (
               <RestaurantCard resData={restaurant} />
